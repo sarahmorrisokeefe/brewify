@@ -176,8 +176,10 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 	try {
 		const me = await spotifyGet('/me', token) as { id: string };
 		userId = me.id;
-	} catch {
-		return error(502, 'Failed to get Spotify user info');
+	} catch (e) {
+		const msg = e instanceof Error ? e.message : String(e);
+		console.error('Failed to get Spotify user info:', msg);
+		return error(502, `Failed to get Spotify user info: ${msg}`);
 	}
 
 	// 4. Create the playlist
@@ -188,16 +190,20 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 			description: analysis.description,
 			public: false
 		});
-	} catch {
-		return error(502, 'Failed to create Spotify playlist');
+	} catch (e) {
+		const msg = e instanceof Error ? e.message : String(e);
+		console.error('Failed to create Spotify playlist:', msg);
+		return error(502, `Failed to create Spotify playlist: ${msg}`);
 	}
 
 	// 5. Add tracks to the playlist
 	const uris = shuffled.map((t) => t.uri as string);
 	try {
 		await spotifyPost(`/playlists/${playlist.id}/tracks`, token, { uris });
-	} catch {
-		return error(502, 'Failed to add tracks to playlist');
+	} catch (e) {
+		const msg = e instanceof Error ? e.message : String(e);
+		console.error('Failed to add tracks to playlist:', msg);
+		return error(502, `Failed to add tracks to playlist: ${msg}`);
 	}
 
 	return json({
