@@ -46,6 +46,9 @@ export const GET: RequestHandler = async ({ url, cookies }) => {
 	const tokens = await tokenResponse.json();
 	const expiresAt = Date.now() + tokens.expires_in * 1000;
 
+	// Log granted scopes so we can verify playlist scopes were approved
+	console.log('Spotify granted scopes:', tokens.scope);
+
 	// Fetch user profile
 	let displayName = '';
 	let avatarUrl = '';

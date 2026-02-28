@@ -176,6 +176,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 	try {
 		const me = await spotifyGet('/me', token) as { id: string };
 		userId = me.id;
+		console.log('Spotify userId:', userId);
 	} catch (e) {
 		const msg = e instanceof Error ? e.message : String(e);
 		console.error('Failed to get Spotify user info:', msg);
@@ -185,10 +186,10 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 	// 4. Create the playlist
 	let playlist: { id: string; name: string; description: string; external_urls: { spotify: string } };
 	try {
-		playlist = await spotifyPost(`/users/${userId}/playlists`, token, {
+		playlist = await spotifyPost(`/users/${encodeURIComponent(userId)}/playlists`, token, {
 			name: analysis.playlistName,
 			description: analysis.description,
-			public: false
+			public: true
 		});
 	} catch (e) {
 		const msg = e instanceof Error ? e.message : String(e);
