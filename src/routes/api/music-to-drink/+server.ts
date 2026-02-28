@@ -202,8 +202,9 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 		try {
 			analysis = await analyzeMusicWithClaude(enrichedInput, failedNames, needed);
 		} catch (e) {
-			console.error('Claude analysis failed:', e);
-			break;
+			const msg = e instanceof Error ? `${e.name}: ${e.message}` : String(e);
+			console.error('Claude analysis failed:', msg);
+			return error(502, `Failed to analyze music vibe: ${msg}`);
 		}
 
 		if (!vibe) {
