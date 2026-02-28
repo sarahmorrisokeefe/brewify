@@ -28,7 +28,7 @@ export const GET: RequestHandler = async ({ cookies }) => {
 		redirect_uri: SPOTIFY_REDIRECT_URI,
 		scope: SCOPES,
 		state,
-		show_dialog: 'false'
+		show_dialog: 'true'
 	});
 
 	return redirect(302, `https://accounts.spotify.com/authorize?${params}`);
