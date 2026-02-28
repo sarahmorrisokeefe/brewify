@@ -1,0 +1,295 @@
+@import "tailwindcss";
+
+@theme {
+	--color-bg: #07070E;
+	--color-surface: rgba(255, 255, 255, 0.04);
+	--color-surface-hover: rgba(255, 255, 255, 0.08);
+	--color-border: rgba(255, 255, 255, 0.08);
+	--color-border-strong: rgba(255, 255, 255, 0.15);
+	--color-drink: #FF5533;
+	--color-drink-muted: rgba(255, 85, 51, 0.12);
+	--color-drink-glow: rgba(255, 85, 51, 0.25);
+	--color-music: #BAFF4B;
+	--color-music-muted: rgba(186, 255, 75, 0.1);
+	--color-music-glow: rgba(186, 255, 75, 0.2);
+	--color-amber: #F0A500;
+	--color-text: #FAFAF0;
+	--color-text-muted: rgba(250, 250, 240, 0.45);
+	--color-text-subtle: rgba(250, 250, 240, 0.25);
+	--font-display: "Syne", sans-serif;
+	--font-body: "Outfit", sans-serif;
+}
+
+*, *::before, *::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	background-color: #07070E;
+	color: #FAFAF0;
+	font-family: "Outfit", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body {
+	min-height: 100vh;
+	background-color: #07070E;
+	background-image:
+		radial-gradient(ellipse 80% 50% at 20% -10%, rgba(255, 85, 51, 0.07) 0%, transparent 60%),
+		radial-gradient(ellipse 60% 40% at 80% 110%, rgba(186, 255, 75, 0.05) 0%, transparent 50%);
+	background-attachment: fixed;
+}
+
+/* Typography utilities */
+.font-display {
+	font-family: "Syne", sans-serif;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+	width: 4px;
+}
+::-webkit-scrollbar-track {
+	background: rgba(255, 255, 255, 0.02);
+}
+::-webkit-scrollbar-thumb {
+	background: rgba(255, 255, 255, 0.12);
+	border-radius: 2px;
+}
+
+/* Custom focus ring */
+:focus-visible {
+	outline: 2px solid rgba(255, 255, 255, 0.4);
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+
+/* Animations */
+@keyframes fadeUp {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes fadeIn {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@keyframes shimmer {
+	0% { background-position: -200% center; }
+	100% { background-position: 200% center; }
+}
+
+@keyframes spin {
+	to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-glow-drink {
+	0%, 100% { box-shadow: 0 0 20px rgba(255, 85, 51, 0.2); }
+	50% { box-shadow: 0 0 40px rgba(255, 85, 51, 0.4); }
+}
+
+@keyframes pulse-glow-music {
+	0%, 100% { box-shadow: 0 0 20px rgba(186, 255, 75, 0.15); }
+	50% { box-shadow: 0 0 40px rgba(186, 255, 75, 0.3); }
+}
+
+.animate-fade-up {
+	animation: fadeUp 0.5s ease forwards;
+}
+
+.animate-fade-in {
+	animation: fadeIn 0.4s ease forwards;
+}
+
+.animate-spin-slow {
+	animation: spin 1.2s linear infinite;
+}
+
+/* Glass card */
+.glass {
+	background: rgba(255, 255, 255, 0.04);
+	backdrop-filter: blur(12px);
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 16px;
+}
+
+.glass-strong {
+	background: rgba(255, 255, 255, 0.06);
+	backdrop-filter: blur(20px);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 16px;
+}
+
+/* Mode-specific card accents */
+.card-drink {
+	border-color: rgba(255, 85, 51, 0.2);
+	background: linear-gradient(135deg, rgba(255, 85, 51, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+}
+
+.card-music {
+	border-color: rgba(186, 255, 75, 0.15);
+	background: linear-gradient(135deg, rgba(186, 255, 75, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+}
+
+/* Buttons */
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 12px 24px;
+	border-radius: 100px;
+	font-family: "Outfit", sans-serif;
+	font-weight: 600;
+	font-size: 15px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	border: none;
+	text-decoration: none;
+}
+
+.btn-drink {
+	background: #FF5533;
+	color: white;
+}
+.btn-drink:hover {
+	background: #ff6644;
+	box-shadow: 0 0 30px rgba(255, 85, 51, 0.4);
+	transform: translateY(-1px);
+}
+.btn-drink:active {
+	transform: translateY(0);
+}
+
+.btn-music {
+	background: #BAFF4B;
+	color: #07070E;
+}
+.btn-music:hover {
+	background: #caff6b;
+	box-shadow: 0 0 30px rgba(186, 255, 75, 0.35);
+	transform: translateY(-1px);
+}
+.btn-music:active {
+	transform: translateY(0);
+}
+
+.btn-ghost {
+	background: rgba(255, 255, 255, 0.06);
+	color: rgba(250, 250, 240, 0.7);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.btn-ghost:hover {
+	background: rgba(255, 255, 255, 0.1);
+	color: #FAFAF0;
+}
+
+.btn-spotify {
+	background: #1DB954;
+	color: white;
+}
+.btn-spotify:hover {
+	background: #1ed660;
+	box-shadow: 0 0 24px rgba(29, 185, 84, 0.35);
+	transform: translateY(-1px);
+}
+
+/* Input */
+.input-field {
+	width: 100%;
+	background: rgba(255, 255, 255, 0.05);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 12px;
+	padding: 14px 18px;
+	color: #FAFAF0;
+	font-family: "Outfit", sans-serif;
+	font-size: 16px;
+	transition: all 0.2s ease;
+	outline: none;
+}
+
+.input-field::placeholder {
+	color: rgba(250, 250, 240, 0.3);
+}
+
+.input-field:focus {
+	border-color: rgba(255, 255, 255, 0.25);
+	background: rgba(255, 255, 255, 0.07);
+}
+
+.input-drink:focus {
+	border-color: rgba(255, 85, 51, 0.4);
+	box-shadow: 0 0 0 3px rgba(255, 85, 51, 0.1);
+}
+
+.input-music:focus {
+	border-color: rgba(186, 255, 75, 0.35);
+	box-shadow: 0 0 0 3px rgba(186, 255, 75, 0.08);
+}
+
+/* Loading spinner */
+.spinner {
+	width: 24px;
+	height: 24px;
+	border: 2px solid rgba(255, 255, 255, 0.15);
+	border-top-color: currentColor;
+	border-radius: 50%;
+	animation: spin 0.8s linear infinite;
+}
+
+/* Tag */
+.tag {
+	display: inline-flex;
+	align-items: center;
+	padding: 4px 10px;
+	border-radius: 100px;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.tag-alcoholic {
+	background: rgba(240, 165, 0, 0.15);
+	color: #F0A500;
+	border: 1px solid rgba(240, 165, 0, 0.25);
+}
+
+.tag-non-alcoholic {
+	background: rgba(186, 255, 75, 0.1);
+	color: #BAFF4B;
+	border: 1px solid rgba(186, 255, 75, 0.2);
+}
+
+/* Track row */
+.track-row {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 10px 12px;
+	border-radius: 10px;
+	transition: background 0.15s ease;
+}
+
+.track-row:hover {
+	background: rgba(255, 255, 255, 0.05);
+}
+
+/* Delay utilities for staggered animations */
+.delay-50 { animation-delay: 50ms; }
+.delay-100 { animation-delay: 100ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
